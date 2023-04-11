@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "1003470910941",
+    "project_id": "role-auth-vitgdsc",
+    "storage_bucket": "role-auth-vitgdsc.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1003470910941:android:dc5d2f46b3d9ce862e7234",
+        "android_client_info": {
+          "package_name": "me.chandramdutta.role_auth"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1003470910941-rligoh4u8cklierk5o1ce8abavihr1vt.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCC_RZWI-CuIRTxmwGWMYPI5Odo1MUFTJU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1003470910941-rligoh4u8cklierk5o1ce8abavihr1vt.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "1003470910941-lg38cccip7kl2a9mlthpe4m5bkrtqsoa.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "me.chandramdutta.roleAuth"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
