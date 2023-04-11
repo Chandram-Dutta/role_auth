@@ -27,14 +27,14 @@ class MyApp extends ConsumerWidget {
     return MaterialApp(
       title: 'Role Based Auth',
       theme: FlexThemeData.light(
-        lightIsWhite: true,
+        // lightIsWhite: true,
         useMaterial3: true,
-        scheme: FlexScheme.espresso,
+        scheme: FlexScheme.redM3,
       ),
       darkTheme: FlexThemeData.dark(
-        darkIsTrueBlack: true,
+        // darkIsTrueBlack: true,
         useMaterial3: true,
-        scheme: FlexScheme.espresso,
+        scheme: FlexScheme.redM3,
       ),
       home: ref.watch(firebaseAuthRepositoryProvider).currentUser == null
           ? const LoginPage()

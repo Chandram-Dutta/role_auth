@@ -52,7 +52,10 @@ class HomePage extends ConsumerWidget {
                       children: [
                         const Text("You are a customer"),
                         data["vendorEmail"] != ""
-                            ? Text("You are assigned to ${data["vendorEmail"]}")
+                            ? Text(
+                                "You are assigned to ${data["vendorEmail"]}",
+                                style: Theme.of(context).textTheme.bodyLarge,
+                              )
                             : const SizedBox()
                       ],
                     ),
