@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:role_auth/authentication/presentation/controllers/login_page_controller.dart';
 import 'package:role_auth/authentication/presentation/pages/signup_page.dart';
+import 'package:role_auth/home/presentation/pages/home_page.dart';
 import 'package:validators/validators.dart';
 
 class LoginPage extends ConsumerStatefulWidget {
@@ -56,6 +57,12 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                 ),
               ],
             ),
+          );
+        } else if (!state.isRefreshing && state.hasValue) {
+          Navigator.pushAndRemoveUntil(
+            context,
+            MaterialPageRoute(builder: (context) => const HomePage()),
+            (route) => false,
           );
         }
       },

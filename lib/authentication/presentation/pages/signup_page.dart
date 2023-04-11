@@ -1,6 +1,10 @@
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:role_auth/authentication/presentation/controllers/signup_page_controller.dart';
 import 'package:role_auth/authentication/presentation/pages/login_page.dart';
+import 'package:role_auth/home/presentation/pages/home_page.dart';
 import 'package:validators/validators.dart';
 
 class SignUpPage extends ConsumerStatefulWidget {
@@ -41,6 +45,36 @@ class _SignUpPageState extends ConsumerState<SignUpPage> {
 
   @override
   Widget build(BuildContext context) {
+    final AsyncValue<void> state = ref.watch(signupPageControllerProvider);
+    ref.listen<AsyncValue>(
+      signupPageControllerProvider,
+      (_, state) {
+        if (!state.isRefreshing && state.hasError) {
+          showCupertinoDialog(
+            context: context,
+            builder: (context) => CupertinoAlertDialog(
+              title: const Text("Error"),
+              content: Text(
+                (state.error as FirebaseException).message ?? "Unknown error",
+              ),
+              actions: [
+                CupertinoDialogAction(
+                  isDestructiveAction: true,
+                  onPressed: () => Navigator.of(context).pop(),
+                  child: const Text("OK"),
+                ),
+              ],
+            ),
+          );
+        } else if (!state.isRefreshing && state.hasValue) {
+          Navigator.pushAndRemoveUntil(
+            context,
+            MaterialPageRoute(builder: (context) => const HomePage()),
+            (route) => false,
+          );
+        }
+      },
+    );
     return Scaffold(
       appBar: AppBar(
         title: const Text("Role Based Auth"),
@@ -144,7 +178,19 @@ class _SignUpPageState extends ConsumerState<SignUpPage> {
                     height: 60,
                     width: MediaQuery.of(context).size.width,
                     child: FilledButton(
-                      onPressed: () {},
+                      onPressed: state.isLoading
+                          ? null
+                          : () {
+                              if (_formKey.currentState!.validate()) {
+                                ref
+                                    .read(signupPageControllerProvider.notifier)
+                                    .signup(
+                                      email: _emailController.text,
+                                      password: _passwordController.text,
+                                      type: dropdownValue.toLowerCase(),
+                                    );
+                              }
+                            },
                       style: ButtonStyle(
                         shape: MaterialStateProperty.all(
                           RoundedRectangleBorder(
@@ -152,7 +198,9 @@ class _SignUpPageState extends ConsumerState<SignUpPage> {
                           ),
                         ),
                       ),
-                      child: const Text("Sign Up"),
+                      child: state.isLoading
+                          ? const CupertinoActivityIndicator()
+                          : const Text("Sign Up"),
                     ),
                   ),
                   Row(
@@ -160,13 +208,15 @@ class _SignUpPageState extends ConsumerState<SignUpPage> {
                     children: [
                       const Text("Already have an account?"),
                       TextButton(
-                        onPressed: () {
-                          Navigator.of(context).pushReplacement(
-                            MaterialPageRoute(
-                              builder: (context) => const LoginPage(),
-                            ),
-                          );
-                        },
+                        onPressed: state.isLoading
+                            ? null
+                            : () {
+                                Navigator.of(context).pushReplacement(
+                                  MaterialPageRoute(
+                                    builder: (context) => const LoginPage(),
+                                  ),
+                                );
+                              },
                         child: const Text("Log In"),
                       ),
                     ],

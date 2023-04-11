@@ -5,6 +5,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:role_auth/authentication/presentation/pages/login_page.dart';
 import 'package:role_auth/authentication/repository/firebase_auth_repository.dart';
 import 'package:role_auth/firebase_options.dart';
+import 'package:role_auth/home/presentation/pages/home_page.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -38,19 +39,6 @@ class MyApp extends ConsumerWidget {
       home: ref.watch(firebaseAuthRepositoryProvider).currentUser == null
           ? const LoginPage()
           : const HomePage(),
-    );
-  }
-}
-
-class HomePage extends StatelessWidget {
-  const HomePage({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text("Role Based Auth"),
-      ),
     );
   }
 }
